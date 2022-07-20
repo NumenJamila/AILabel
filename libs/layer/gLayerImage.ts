@@ -82,6 +82,22 @@ export default class ImageLayer extends CanvasLayer {
 
       this.image.src = this.imageInfo.src;
       this.image.onload = () => {
+        this.imageInfo.width = this.image.width
+        this.imageInfo.height = this.image.height
+        // this.map.imageInfo = {
+        //     width:this.image.width,
+        //     height: this.image.height
+        //   }
+        console.log(this.imageInfo)
+        this.map.center = {
+          x: this.image.width / 2,
+          y: this.image.height / 2
+        }
+        if (this.image.width > this.image.height) {
+          this.map.zoom = this.image.width * 1.1
+        } else {
+          this.map.zoom = (this.map.size.width / this.map.size.height) * this.image.height * 1.1
+        }
         this.imageSuccess = true;
         this.map && this.refresh();
         this.eventsObServer.emit(

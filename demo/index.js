@@ -12886,6 +12886,24 @@
           this.image.src = this.imageInfo.src;
 
           this.image.onload = function () {
+            _this2.imageInfo.width = _this2.image.width;
+            _this2.imageInfo.height = _this2.image.height; // this.map.imageInfo = {
+            //     width:this.image.width,
+            //     height: this.image.height
+            //   }
+
+            console.log(_this2.imageInfo);
+            _this2.map.center = {
+              x: _this2.image.width / 2,
+              y: _this2.image.height / 2
+            };
+
+            if (_this2.image.width > _this2.image.height) {
+              _this2.map.zoom = _this2.image.width * 1.1;
+            } else {
+              _this2.map.zoom = _this2.map.size.width / _this2.map.size.height * _this2.image.height * 1.1;
+            }
+
             _this2.imageSuccess = true;
             _this2.map && _this2.refresh();
 
