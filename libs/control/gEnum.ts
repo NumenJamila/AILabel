@@ -1,5 +1,4 @@
-
 export enum EControlType {
-    Scale = "SCALE",
-    Grid = "GRID"
+  Scale = "SCALE",
+  Grid = "GRID"
 }

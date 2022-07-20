@@ -13,15 +13,15 @@ import packageJson from '../package.json';
 const SDK_VERSION = `${packageJson.version}`; // 版本号
 
 const AILabel = {
-    Map,
-    Layer,
-    Feature,
-    Mask,
-    Control,
-    Text,
-    Marker,
-    Util,
-    version: SDK_VERSION
+  Map,
+  Layer,
+  Feature,
+  Mask,
+  Control,
+  Text,
+  Marker,
+  Util,
+  version: SDK_VERSION
 };
 
 export default AILabel;

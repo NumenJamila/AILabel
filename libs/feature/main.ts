@@ -8,14 +8,14 @@ import Polygon from './gFeaturePolygon';
 import Arrow from './gFeatureArrow';
 
 const Feature = {
-    Base: BaseFeature,
-    Point,
-    Circle,
-    Line,
-    Polyline,
-    Rect,
-    Polygon,
-    Arrow
+  Base: BaseFeature,
+  Point,
+  Circle,
+  Line,
+  Polyline,
+  Rect,
+  Polygon,
+  Arrow
 };
 
 export default Feature;

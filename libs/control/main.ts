@@ -2,8 +2,8 @@ import Scale from './gControlScale';
 import Grid from './gControlGrid';
 
 const Control = {
-    Scale,
-    Grid
+  Scale,
+  Grid
 };
 
 export default Control;

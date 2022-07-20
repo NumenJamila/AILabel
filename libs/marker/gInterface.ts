@@ -1,4 +1,4 @@
-import {IObject, IPoint} from "../gInterface";
+import { IObject, IPoint } from "../gInterface";
 
 // marker相关信息
 export interface IMarkerInfo extends IObject {

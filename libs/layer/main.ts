@@ -7,13 +7,13 @@ import SupportLayer from './gLayerSupport';
 import EventLayer from './gLayerEvent';
 
 const Layer = {
-    Text,
-    Mask,
-    Image,
-    Feature,
-    OverlayLayer,
-    SupportLayer,
-    EventLayer
+  Text,
+  Mask,
+  Image,
+  Feature,
+  OverlayLayer,
+  SupportLayer,
+  EventLayer
 };
 
 export default Layer;
