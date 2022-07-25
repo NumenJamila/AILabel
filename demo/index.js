@@ -7683,25 +7683,14 @@
     }, {
       key: "handleMapPanMove",
       value: function handleMapPanMove(e) {
+        // const { x: dltX, y: dltY } = this.getDltXY(e);
+        // this.map.onDrag(dltX, dltY);
+
+        /** 20220722 去除拖拽后显示，改为拖拽中显示 */
+        // 计算偏移量
         var _this$getDltXY = this.getDltXY(e),
             dltX = _this$getDltXY.x,
             dltY = _this$getDltXY.y;
-
-        this.map.onDrag(dltX, dltY);
-      } // map平移结束
-
-    }, {
-      key: "handleMapPanEnd",
-      value: function handleMapPanEnd(e) {
-        this.dragging = false; // 鼠标抬起
-
-        this.setEventCursor(ECursorType.Grab);
-        document.onmousemove = null;
-        document.onmouseup = null; // 计算偏移量
-
-        var _this$getDltXY2 = this.getDltXY(e),
-            dltX = _this$getDltXY2.x,
-            dltY = _this$getDltXY2.y;
 
         var _this$map$getScreenCe = this.map.getScreenCenter(),
             screenCenterX = _this$map$getScreenCe.x,
@@ -7716,7 +7705,37 @@
           y: newScreenCenterY
         }); // 将map中相关元素复位，然后进行刷新
 
-        this.map.reset().setCenter(newCenter);
+        this.map.reset().setCenter(newCenter); // 相关坐标值处理
+
+        var screenX = e.screenX,
+            screenY = e.screenY; // 设置保存起始坐标
+
+        this.startPoint = this.getMouseEventPoint(e);
+        this.startPageScreenPoint = {
+          x: screenX,
+          y: screenY
+        };
+      } // map平移结束
+
+    }, {
+      key: "handleMapPanEnd",
+      value: function handleMapPanEnd(e) {
+        this.dragging = false; // 鼠标抬起
+
+        this.setEventCursor(ECursorType.Grab);
+        document.onmousemove = null;
+        document.onmouseup = null;
+        /** 20220722 去除拖拽后显示，改为拖拽中显示 */
+        // // 计算偏移量
+        // const { x: dltX, y: dltY } = this.getDltXY(e);
+        // const { x: screenCenterX, y: screenCenterY } = this.map.getScreenCenter();
+        // // 计算待更新的屏幕中心点坐标
+        // const newScreenCenterX = screenCenterX - dltX;
+        // const newScreenCenterY = screenCenterY - dltY;
+        // // 新的屏幕坐标转换为实际坐标值
+        // const newCenter = this.map.transformScreenToGlobal({ x: newScreenCenterX, y: newScreenCenterY });
+        // // 将map中相关元素复位，然后进行刷新
+        // this.map.reset().setCenter(newCenter);
       } // 获取pageScreenPoint相对startPageScreenPoint偏移量
 
     }, {
@@ -7822,17 +7841,17 @@
       value: function handleCircleMove(e) {
         var global = this.startPoint.global;
 
-        var _this$getDltXY3 = this.getDltXY(e, {
+        var _this$getDltXY2 = this.getDltXY(e, {
           transform: true
         }),
-            preGlobalDltX = _this$getDltXY3.x,
-            preGlobalDltY = _this$getDltXY3.y;
+            preGlobalDltX = _this$getDltXY2.x,
+            preGlobalDltY = _this$getDltXY2.y;
 
-        var _this$getDltXY4 = this.getDltXY(e, {
+        var _this$getDltXY3 = this.getDltXY(e, {
           transform: false
         }),
-            screenDltX = _this$getDltXY4.x,
-            screenDltY = _this$getDltXY4.y;
+            screenDltX = _this$getDltXY3.x,
+            screenDltY = _this$getDltXY3.y;
 
         var screenDlt = Math.sqrt(screenDltX * screenDltX + screenDltY * screenDltY);
         var isXAxisRight = this.map.xAxis.direction === EXAxisDirection.Right;
@@ -7865,17 +7884,17 @@
             centerX = _this$startPoint$glob.x,
             centerY = _this$startPoint$glob.y;
 
-        var _this$getDltXY5 = this.getDltXY(e, {
+        var _this$getDltXY4 = this.getDltXY(e, {
           transform: true
         }),
-            globalDltX = _this$getDltXY5.x,
-            globalDltY = _this$getDltXY5.y;
+            globalDltX = _this$getDltXY4.x,
+            globalDltY = _this$getDltXY4.y;
 
-        var _this$getDltXY6 = this.getDltXY(e, {
+        var _this$getDltXY5 = this.getDltXY(e, {
           transform: false
         }),
-            screenDltX = _this$getDltXY6.x,
-            screenDltY = _this$getDltXY6.y;
+            screenDltX = _this$getDltXY5.x,
+            screenDltY = _this$getDltXY5.y;
 
         var globalDlt = Math.sqrt(globalDltX * globalDltX + globalDltY * globalDltY);
         var screenDlt = Math.sqrt(screenDltX * screenDltX + screenDltY * screenDltY);
@@ -8080,11 +8099,11 @@
             x = _this$startPoint$glob2.x,
             y = _this$startPoint$glob2.y;
 
-        var _this$getDltXY7 = this.getDltXY(e, {
+        var _this$getDltXY6 = this.getDltXY(e, {
           transform: true
         }),
-            width = _this$getDltXY7.x,
-            height = _this$getDltXY7.y;
+            width = _this$getDltXY6.x,
+            height = _this$getDltXY6.y;
 
         var isXAxisRight = this.map.xAxis.direction === EXAxisDirection.Right;
         var isYAxisTop = this.map.yAxis.direction === EYAxisDirection.Top;
@@ -8118,9 +8137,9 @@
             startScreeX = _this$startPoint$scre.x,
             startScreeY = _this$startPoint$scre.y;
 
-        var _this$getDltXY8 = this.getDltXY(e),
-            screenDltX = _this$getDltXY8.x,
-            screenDltY = _this$getDltXY8.y;
+        var _this$getDltXY7 = this.getDltXY(e),
+            screenDltX = _this$getDltXY7.x,
+            screenDltY = _this$getDltXY7.y;
 
         var width = Math.abs(screenDltX) / scale;
         var height = Math.abs(screenDltY) / scale;
@@ -8290,9 +8309,9 @@
             startScreeX = _this$startPoint$scre2.x,
             startScreeY = _this$startPoint$scre2.y;
 
-        var _this$getDltXY9 = this.getDltXY(e),
-            dltX = _this$getDltXY9.x,
-            dltY = _this$getDltXY9.y;
+        var _this$getDltXY8 = this.getDltXY(e),
+            dltX = _this$getDltXY8.x,
+            dltY = _this$getDltXY8.y;
 
         var middleScreenPoint = {
           x: startScreeX + dltX,
@@ -8676,17 +8695,17 @@
       value: function handleActiveFeatureMove(e) {
         var _this13 = this;
 
-        var _this$getDltXY10 = this.getDltXY(e, {
+        var _this$getDltXY9 = this.getDltXY(e, {
           transform: true
         }),
-            preGlobalDltX = _this$getDltXY10.x,
-            preGlobalDltY = _this$getDltXY10.y;
+            preGlobalDltX = _this$getDltXY9.x,
+            preGlobalDltY = _this$getDltXY9.y;
 
-        var _this$getDltXY11 = this.getDltXY(e, {
+        var _this$getDltXY10 = this.getDltXY(e, {
           transform: false
         }),
-            preScreenDltX = _this$getDltXY11.x;
-            _this$getDltXY11.y;
+            preScreenDltX = _this$getDltXY10.x;
+            _this$getDltXY10.y;
 
         var activeFeature = this.map.activeFeature;
         var type = activeFeature.type,
@@ -12006,6 +12025,25 @@
       key: "getCenter",
       value: function getCenter() {
         return this.center;
+      } // 初始化--自动根据图片宽高计算中心点和zoom,自适应全显
+
+    }, {
+      key: "setCenterAndZoomByImage",
+      value: function setCenterAndZoomByImage(imageInfo) {
+        var width = imageInfo.width,
+            height = imageInfo.height;
+        var sWidth = this.size.width;
+        var sHeight = this.size.height;
+        this.center = {
+          x: width / 2,
+          y: height / 2
+        };
+
+        if (width / height > sWidth / sHeight) {
+          this.zoom = width * 1.1;
+        } else {
+          this.zoom = sWidth / sHeight * height * 1.1;
+        }
       } // 获取屏幕中心点坐标
 
     }, {
@@ -12127,7 +12165,7 @@
     }, {
       key: "zoomIn",
       value: function zoomIn() {
-        this.zoom = this.zoom / 2;
+        this.zoom = this.zoom * 0.8;
         this.refresh();
         this.triggerBoundsChanged();
       } // 缩小
@@ -12135,7 +12173,7 @@
     }, {
       key: "zoomOut",
       value: function zoomOut() {
-        this.zoom = this.zoom * 2;
+        this.zoom = this.zoom * 1.2;
         this.refresh();
         this.triggerBoundsChanged();
       } // 设置滑轮缩放比例, 取值区间[0, 10)
@@ -12886,23 +12924,13 @@
           this.image.src = this.imageInfo.src;
 
           this.image.onload = function () {
-            _this2.imageInfo.width = _this2.image.width;
-            _this2.imageInfo.height = _this2.image.height; // this.map.imageInfo = {
-            //     width:this.image.width,
-            //     height: this.image.height
-            //   }
+            var _this2$image = _this2.image,
+                width = _this2$image.width,
+                height = _this2$image.height;
+            _this2.imageInfo.width = width;
+            _this2.imageInfo.height = height;
 
-            console.log(_this2.imageInfo);
-            _this2.map.center = {
-              x: _this2.image.width / 2,
-              y: _this2.image.height / 2
-            };
-
-            if (_this2.image.width > _this2.image.height) {
-              _this2.map.zoom = _this2.image.width * 1.1;
-            } else {
-              _this2.map.zoom = _this2.map.size.width / _this2.map.size.height * _this2.image.height * 1.1;
-            }
+            _this2.map.setCenterAndZoomByImage(_this2.imageInfo);
 
             _this2.imageSuccess = true;
             _this2.map && _this2.refresh();
@@ -14411,6 +14439,8 @@
           this.image.style.position = 'absolute';
           this.image.style.cursor = 'pointer';
           this.image.style.userSelect = 'none';
+          this.image.style.width = this.markerInfo.width + "px";
+          this.image.style.height = this.markerInfo.height + "px";
           this.image.src = this.markerInfo.src;
 
           this.image.onload = function () {
@@ -14618,8 +14648,10 @@
     offset: {
       x: 0,
       y: 0
-    } // 文本偏移量
-
+    },
+    // 文本偏移量
+    width: 0,
+    height: 0
   });
 
   var name = "ailabel";

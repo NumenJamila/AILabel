@@ -267,6 +267,21 @@ export default class Map {
   public getCenter(): IPoint {
     return this.center;
   }
+  // 初始化--自动根据图片宽高计算中心点和zoom,自适应全显
+  public setCenterAndZoomByImage(imageInfo) {
+    let { width, height } = imageInfo
+    let sWidth = this.size.width
+    let sHeight = this.size.height
+    this.center = {
+      x: width / 2,
+      y: height / 2
+    }
+    if (width / height > sWidth / sHeight) {
+      this.zoom = width * 1.1
+    } else {
+      this.zoom = (sWidth / sHeight) * height * 1.1
+    }
+  }
 
   // 获取屏幕中心点坐标
   public getScreenCenter(): IPoint {
@@ -346,14 +361,14 @@ export default class Map {
 
   // 放大-中心点放大
   zoomIn(): void {
-    this.zoom = this.zoom / 2;
+    this.zoom = this.zoom * 0.8;
     this.refresh();
     this.triggerBoundsChanged();
   }
 
   // 缩小
   zoomOut(): void {
-    this.zoom = this.zoom * 2;
+    this.zoom = this.zoom * 1.2;
     this.refresh();
     this.triggerBoundsChanged();
   }

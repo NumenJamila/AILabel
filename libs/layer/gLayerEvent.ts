@@ -141,15 +141,9 @@ export default class EventLayer extends Layer {
   }
   // map平移中
   public handleMapPanMove(e: MouseEvent) {
-    const { x: dltX, y: dltY } = this.getDltXY(e);
-    this.map.onDrag(dltX, dltY);
-  }
-  // map平移结束
-  public handleMapPanEnd(e: MouseEvent) {
-    this.dragging = false; // 鼠标抬起
-    this.setEventCursor(ECursorType.Grab);
-    document.onmousemove = null;
-    document.onmouseup = null;
+    // const { x: dltX, y: dltY } = this.getDltXY(e);
+    // this.map.onDrag(dltX, dltY);
+    /** 20220722 去除拖拽后显示，改为拖拽中显示 */
     // 计算偏移量
     const { x: dltX, y: dltY } = this.getDltXY(e);
     const { x: screenCenterX, y: screenCenterY } = this.map.getScreenCenter();
@@ -160,6 +154,29 @@ export default class EventLayer extends Layer {
     const newCenter = this.map.transformScreenToGlobal({ x: newScreenCenterX, y: newScreenCenterY });
     // 将map中相关元素复位，然后进行刷新
     this.map.reset().setCenter(newCenter);
+    // 相关坐标值处理
+    const { screenX, screenY } = e;
+    // 设置保存起始坐标
+    this.startPoint = this.getMouseEventPoint(e);
+    this.startPageScreenPoint = { x: screenX, y: screenY };
+  }
+  // map平移结束
+  public handleMapPanEnd(e: MouseEvent) {
+    this.dragging = false; // 鼠标抬起
+    this.setEventCursor(ECursorType.Grab);
+    document.onmousemove = null;
+    document.onmouseup = null;
+    /** 20220722 去除拖拽后显示，改为拖拽中显示 */
+    // // 计算偏移量
+    // const { x: dltX, y: dltY } = this.getDltXY(e);
+    // const { x: screenCenterX, y: screenCenterY } = this.map.getScreenCenter();
+    // // 计算待更新的屏幕中心点坐标
+    // const newScreenCenterX = screenCenterX - dltX;
+    // const newScreenCenterY = screenCenterY - dltY;
+    // // 新的屏幕坐标转换为实际坐标值
+    // const newCenter = this.map.transformScreenToGlobal({ x: newScreenCenterX, y: newScreenCenterY });
+    // // 将map中相关元素复位，然后进行刷新
+    // this.map.reset().setCenter(newCenter);
   }
   // 获取pageScreenPoint相对startPageScreenPoint偏移量
   public getDltXY(e: MouseEvent, option?: IObject): IPoint {

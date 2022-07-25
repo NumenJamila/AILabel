@@ -42,7 +42,9 @@ export default class Marker {
   static defaultMarkerInfo: IMarkerInfo = {
     src: '',
     position: { x: 0, y: 0 }, // 文本位置
-    offset: { x: 0, y: 0 } // 文本偏移量
+    offset: { x: 0, y: 0 }, // 文本偏移量
+    width: 0,
+    height: 0
   }
   public markerInfo: IMarkerInfo
 
@@ -92,6 +94,8 @@ export default class Marker {
       this.image.style.position = 'absolute';
       this.image.style.cursor = 'pointer';
       this.image.style.userSelect = 'none';
+      this.image.style.width = this.markerInfo.width + "px";
+      this.image.style.height = this.markerInfo.height + "px";
       this.image.src = this.markerInfo.src;
       this.image.onload = () => {
         this.layer?.dom?.appendChild(this.image);
